@@ -2,6 +2,7 @@ from colorama import Fore, init
 import asyncio
 import aiosqlite  # Using aiosqlite for async SQLite operations
 import scripts.logging as logging
+import toml
 
 init(autoreset=True)
 
@@ -57,8 +58,12 @@ async def startup():
     
     print(Fore.MAGENTA + logo)
     
+    # Load the configuration file
+    config = toml.load('config.toml')
+    version = config['Version']
+    
     await database_startup()
-    await logging.log('info', "Das Backend Startet...")
+    await logging.log('info', "Phantom Backend (Version " + version + ") wurde erfolgreich gestartet.")
 
 # To run the startup function
 def run_startup():
