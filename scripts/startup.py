@@ -1,6 +1,6 @@
 from colorama import Fore, init
 import asyncio
-import aiosqlite  # Using aiosqlite for async SQLite operations
+import aiosqlite
 import scripts.logging as logging
 import toml
 
@@ -62,6 +62,7 @@ async def startup():
     config = toml.load('config.toml')
     version = config['Version']
     
+    await logging.setup_logging()
     await database_startup()
     await logging.log('info', "Phantom Backend (Version " + version + ") wurde erfolgreich gestartet.")
 
